@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>01-01.php</title>
+  </head>
+  <body>
+  <p>Por favor, introduzca un día de la semana  (en minúsculas) y le diré qué asignatura toca a primera hora ese día: </p>
+        <form action="01-02.php" method="post">
+          <input type="text" name="dia" autofocus><br>
+          <input type="submit" value="Aceptar">
+        </form>
+</html>
