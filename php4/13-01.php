@@ -2,38 +2,62 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>UT2 T4 10-01.php</title>
+    <title>UT2 T4 13.php</title>
   </head>
   <body>
+
+
+    <h2>Resalta el mínimo y sus diagonales</h2>
     <?php
-        $puntuacion = array (
-          'As' => 11, 'Dos' => 0, 'Tres' => 10, 'Cuatro' => 0, 'Cinco' => 0,
-          'Seis' => 0, 'Siete' => 0, 'Sota' => 2, 'Caballo' => 3, 'Rey' => 4);
-
-        $palo = array ('Oros', 'Copas', 'Espadas', 'Bastos');
-
-        $figura = array ('As', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Sota', 'Caballo', 'Rey');
-
-        $cartasEchadas[] = "";
-        $contadorCartasEchadas = 0;
-        $puntosTotales = 0;
-
-        do {
-          $paloCarta = $palo[rand(0, 3)];
-          $figuraCarta = $figura[rand(0, 9)];
-          $puntosCarta = $puntuacion[$figuraCarta];
-          $nombreCarta = "$figuraCarta de $paloCarta";
-          if (!in_array($nombreCarta, $cartasEchadas)) {
-            echo "$nombreCarta - $puntosCarta puntos<br>";
-            $cartasEchadas[] = $nombreCarta;
-            $contadorCartasEchadas++;
-            $puntosTotales += $puntosCarta;
+      // Genera un array con números aleatorios que no se repiten
+      // Primero se meten en un array lineal (todos seguidos)...
+      $i = 0;
+      $lineal = [];
+      do {
+        $n = rand(100, 999);
+        if (!in_array($n, $lineal)) {
+          $lineal[] = $n;
+          $i++;
+        }
+      } while ($i < 54);
+      // ...y después se vuelca en un array de 9x6
+      // al mismo tiempo que se calculan las coordenadas
+      // del mínimo
+      $minimo = 999;
+      $i = 0;
+      for ($x = 0; $x < 9; $x++) {
+        for ($y = 0; $y < 6; $y++) {
+          $numero[$x][$y] = $lineal[$i];
+          $i++;
+          if ($numero[$x][$y] < $minimo) {
+            $minimo = $numero[$x][$y];
+            $xMinimo = $x;
+            $yMinimo = $y;
           }
-        } while ($contadorCartasEchadas < 10);
+        }
+      }
 
-        echo "<br><b>Total: $puntosTotales puntos</b>";
-        ?>
-        <br><br>
-        <a href="10-01.php">>> Volver</a>
+      // Se muestra el array con el mínimo en azul y sus
+      // diagonales en verde
+      // Nota: abs($x) devuelve el valor absoluto de $x
+      echo "<table>";
+      for ($x = 0; $x < 9; $x++) {
+        echo "<tr>";
+        for ($y = 0; $y < 6; $y++) {
+          if ($numero[$x][$y] == $minimo) {
+            echo '<td><span style="color: blue; font-weight:bold">'.$numero[$x][$y].' </span></td>';
+          } else if (abs((abs($x) - abs($xMinimo))) == abs((abs($y) - abs($yMinimo)))) {
+            echo '<td><span style="color: green; font-weight:bold">'.$numero[$x][$y].' </span></td>';
+          } else {
+            echo '<td>'.$numero[$x][$y].'</td>';
+          }
+        }
+        echo "</tr>";
+      }
+      echo "</table>";
+      ?>
+      <br>
+      <a href="13-01.php">>> Volver</a>
+
   </body>
 </html>
