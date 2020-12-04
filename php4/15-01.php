@@ -1,39 +1,68 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>UT2 T4 10-01.php</title>
-  </head>
-  <body>
-    <?php
-        $puntuacion = array (
-          'As' => 11, 'Dos' => 0, 'Tres' => 10, 'Cuatro' => 0, 'Cinco' => 0,
-          'Seis' => 0, 'Siete' => 0, 'Sota' => 2, 'Caballo' => 3, 'Rey' => 4);
+<!-- Realiza un programa que sea capaz de rotar todos los elementos de una matriz cuadrada una posición en el sentido de las agujas del reloj. La matriz debe tener 12 filas por 12 columnas y debe contener números generados al azar entre 0 y 100. Se debe mostrar tanto la matriz original como la matriz resultado, ambas con los números convenientemente alineados -->
+<?php
+$numeroFilas = $numerosColumnas = 5;
+$fila = $columna = 0;
 
-        $palo = array ('Oros', 'Copas', 'Espadas', 'Bastos');
+echo "<p> MATRIZ ORIGINAL </p>";
+for ($i = 0; $i < $numeroFilas; $i++) {
+  for ($k = 0; $k < $numerosColumnas; $k++) {
+    $array[$i][$k] = rand(0, 100);
+    // $array[$i][$k] = $k; // rellenamos con numero consecutivos, para facilitar desarrollo
+    echo $array[$i][$k] . " ";
+  }
+  echo "<br> ";
+}
+echo "<p> MATRIZ ROTADA </p>";
+$nuevoArray = $array;
+while ($fila < $numeroFilas and $columna < $numerosColumnas) {
 
-        $figura = array ('As', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Sota', 'Caballo', 'Rey');
+  //Primera fila
 
-        $cartasEchadas[] = "";
-        $contadorCartasEchadas = 0;
-        $puntosTotales = 0;
+  //Guardamos primer valor de la fila siguiente
+  $valorPrevio = $array[$fila + 1][$columna];
 
-        do {
-          $paloCarta = $palo[rand(0, 3)];
-          $figuraCarta = $figura[rand(0, 9)];
-          $puntosCarta = $puntuacion[$figuraCarta];
-          $nombreCarta = "$figuraCarta de $paloCarta";
-          if (!in_array($nombreCarta, $cartasEchadas)) {
-            echo "$nombreCarta - $puntosCarta puntos<br>";
-            $cartasEchadas[] = $nombreCarta;
-            $contadorCartasEchadas++;
-            $puntosTotales += $puntosCarta;
-          }
-        } while ($contadorCartasEchadas < 10);
+  for ($i = $columna; $i < $numerosColumnas; $i++) {
+    $valorActual = $array[$fila][$i];
+    $nuevoArray[$fila][$i] = $valorPrevio;
+    $valorPrevio = $valorActual;
+  }
+  $fila++;
 
-        echo "<br><b>Total: $puntosTotales puntos</b>";
-        ?>
-        <br><br>
-        <a href="10-01.php">>> Volver</a>
-  </body>
-</html>
+  //Ultima Columna
+  for ($i = $fila; $i < $numeroFilas; $i++) {
+    $valorActual = $array[$i][$numerosColumnas - 1];
+    $nuevoArray[$i][$numerosColumnas - 1] = $valorPrevio;
+    $valorPrevio = $valorActual;
+  }
+  $numerosColumnas--;
+
+  //Ultima fila
+  if ($fila < $numeroFilas) {
+    for ($i = $numerosColumnas - 1; $i >= $columna; $i--) {
+      $valorActual = $array[$numeroFilas - 1][$i];
+      $nuevoArray[$numeroFilas - 1][$i] = $valorPrevio;
+      $valorPrevio = $valorActual;
+    }
+  }
+  $numeroFilas--;
+
+  //Primera Columna
+  if ($columna < $numerosColumnas) {
+    for ($i = $numeroFilas - 1; $i >= $fila; $i--) {
+      $valorActual = $array[$i][$columna];
+      $nuevoArray[$i][$columna] = $valorPrevio;
+      $valorPrevio = $valorActual;
+    }
+  }
+  $columna++;
+}
+
+//Mostramos nuevo array
+
+for ($i = 0; $i < count($array); $i++) {
+  for ($k = 0; $k < count($array); $k++) {
+    echo $nuevoArray[$i][$k] . " ";
+  }
+  echo "<br>";
+}
+?>

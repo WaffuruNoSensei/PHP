@@ -27,7 +27,7 @@
       echo "<tr><td>$mes </td><td>";
       // Pinta la barra
       for ($i = 0; $i < $temperaturaMes; $i++) {
-        echo "<img src=\"bggreen.png\">";
+        echo "<img src=\"blanco.png\" width=\"30\">";
       }
       echo " $temperaturaMes"."ºC<br></td></tr>";
     }

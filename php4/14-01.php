@@ -39,12 +39,12 @@
 
         // Comprueba si el alfil está en la posición actual
         if (($x == $columna) && ($y == $fila)) {
-          echo '<img src="alfil.png">';
+          echo '<img src="alfil.png" width="30px" height="30px">';
         // Comprueba si es una posición a la que puede llegar el alfil
         } else if (abs((abs($x) - abs($columna))) == abs((abs($y) - abs($fila)))) {
-          echo '<img src="alfilsemitransparente.png">';
+          echo '<img src="alfilsemitransparente.png" width="30px" height="30px">';
         } else {
-          echo '<img src="vacio.png">';
+          echo '<img src="vacio.png" width="30px" height="30px">';
         }
         echo "</td>";
 
